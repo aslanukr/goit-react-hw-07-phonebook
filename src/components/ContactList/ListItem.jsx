@@ -7,13 +7,24 @@ import {
   Name,
   PhoneWrapper,
 } from 'components/Styles.styled';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contacts/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteContactsThunk,
+  getContactsThunk,
+} from 'redux/contacts/contactsThunk';
+import { selectIsLoading } from 'redux/selectors';
 
 export const ListItem = ({ contact }) => {
   const { id, name, number } = contact;
 
+  const isLoading = useSelector(selectIsLoading);
+
   const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    await dispatch(deleteContactsThunk(id));
+    await dispatch(getContactsThunk());
+  };
 
   return (
     <ContactItem>
@@ -28,7 +39,8 @@ export const ListItem = ({ contact }) => {
             type="button"
             name="delete"
             value={id}
-            onClick={() => dispatch(deleteContact(contact.id))}
+            onClick={handleDelete}
+            disabled={isLoading}
           >
             <BiTrash size="20px" />
           </DeleteBtn>

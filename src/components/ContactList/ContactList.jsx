@@ -1,35 +1,28 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListItem } from './ListItem';
 import { List, Info } from 'components/Styles.styled';
-import Notiflix from 'notiflix';
-import { getContacts, getFilter } from 'redux/selectors';
+import { selectVisibleContacts } from 'redux/selectors';
+import { useEffect } from 'react';
+import { getContactsThunk } from 'redux/contacts/contactsThunk';
 
 export const ContactList = () => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const contacts = useSelector(selectVisibleContacts);
 
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase().trim();
-    const sortedContacts = [...contacts].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    return sortedContacts.filter(sortedContact =>
-      sortedContact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+  const dispatch = useDispatch();
 
-  const visibleContacts = getFilteredContacts();
+  useEffect(() => {
+    dispatch(getContactsThunk());
+  }, [dispatch]);
 
   return (
     <>
       <List>
-        {visibleContacts.length ? (
-          visibleContacts.map(({ id, name, number }) => (
+        {contacts.length ? (
+          contacts.map(({ id, name, number }) => (
             <ListItem key={id} contact={{ id, name, number }} />
           ))
         ) : (
           <>
-            {Notiflix.Notify.info('No contacts found')}
             <Info>No contacts</Info>
           </>
         )}

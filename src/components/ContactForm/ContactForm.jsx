@@ -1,18 +1,22 @@
 import { AddBtn, Form, FormLabel, Input } from 'components/Styles.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contacts/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import Notiflix from 'notiflix';
+import {
+  addContactsThunk,
+  getContactsThunk,
+} from 'redux/contacts/contactsThunk';
 
 export function ContactForm() {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const name = e.target.elements.name.value;
     const number = e.target.elements.number.value;
     const normalizedName = name.toLowerCase().trim();
+
     if (
       contacts.find(
         contact => contact.name.toLowerCase().trim() === normalizedName
@@ -21,7 +25,9 @@ export function ContactForm() {
       Notiflix.Notify.warning(`${name} is already in contacts`);
       return;
     } else {
-      dispatch(addContact(name, number));
+      const newContact = { name, number };
+      await dispatch(addContactsThunk(newContact));
+      await dispatch(getContactsThunk());
       e.target.reset();
     }
   };
