@@ -1,11 +1,11 @@
 import { AddBtn, Form, FormLabel, Input } from 'components/Styles.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
-import Notiflix from 'notiflix';
 import {
   addContactsThunk,
   getContactsThunk,
 } from 'redux/contacts/contactsThunk';
+import Swal from 'sweetalert2';
 
 export function ContactForm() {
   const contacts = useSelector(selectContacts);
@@ -22,10 +22,22 @@ export function ContactForm() {
         contact => contact.name.toLowerCase().trim() === normalizedName
       )
     ) {
-      Notiflix.Notify.warning(`${name} is already in contacts`);
+      Swal.fire({
+        icon: 'info',
+        title: `${name} is already in contacts`,
+        confirmButtonColor: '#4289fe',
+      });
       return;
     } else {
       const newContact = { name, number };
+      Swal.fire({
+        icon: 'success',
+        position: 'top-center',
+        title: 'Success!',
+        text: `${name} has been successfully added!`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
       await dispatch(addContactsThunk(newContact));
       await dispatch(getContactsThunk());
       e.target.reset();

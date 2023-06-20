@@ -13,6 +13,7 @@ import {
   getContactsThunk,
 } from 'redux/contacts/contactsThunk';
 import { selectIsLoading } from 'redux/selectors';
+import Swal from 'sweetalert2';
 
 export const ListItem = ({ contact }) => {
   const { id, name, number } = contact;
@@ -22,8 +23,24 @@ export const ListItem = ({ contact }) => {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    await dispatch(deleteContactsThunk(id));
-    await dispatch(getContactsThunk());
+    try {
+      const result = await Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: `You are about to delete ${name}`,
+        showCancelButton: true,
+        confirmButtonText: `Delete ${name}`,
+        confirmButtonColor: 'red',
+      });
+
+      if (result.isConfirmed) {
+        await dispatch(deleteContactsThunk(id));
+        await dispatch(getContactsThunk());
+        Swal.fire(`${name} has been deleted!`, '', 'success');
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
