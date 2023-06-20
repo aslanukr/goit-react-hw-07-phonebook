@@ -36,7 +36,7 @@ export function ContactForm() {
         title: 'Success!',
         text: `${name} has been successfully added!`,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 3000,
       });
       await dispatch(addContactsThunk(newContact));
       await dispatch(getContactsThunk());

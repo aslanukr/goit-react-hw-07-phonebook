@@ -36,7 +36,11 @@ export const ListItem = ({ contact }) => {
       if (result.isConfirmed) {
         await dispatch(deleteContactsThunk(id));
         await dispatch(getContactsThunk());
-        Swal.fire(`${name} has been deleted!`, '', 'success');
+        Swal.fire({
+          title: `${name} has been deleted!`,
+          icon: 'success',
+          confirmButtonColor: '#4289fe',
+        });
       }
     } catch (e) {
       console.log(e.message);
