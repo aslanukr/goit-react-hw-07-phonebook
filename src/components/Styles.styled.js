@@ -170,13 +170,6 @@ export const ContactItem = styled.li`
   }
 `;
 
-export const DeleteBtn = styled.button`
-  max-width: 100px;
-  color: red;
-  background-color: #ffffff;
-  border: none;
-`;
-
 export const PhoneWrapper = styled.a`
   margin-left: auto;
   display: flex;

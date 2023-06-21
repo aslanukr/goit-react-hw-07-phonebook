@@ -3,7 +3,6 @@ import { BiPhoneCall, BiTrash } from 'react-icons/bi';
 import {
   ContactItem,
   ContactWrapper,
-  DeleteBtn,
   Name,
   PhoneWrapper,
 } from 'components/Styles.styled';
