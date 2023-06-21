@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 50px;
+  padding: 10px;
   margin: 0 auto;
   max-width: 700px;
   font-size: 40px;
   color: #010101;
+
+  @media screen and (min-width: 568px) {
+    padding: 50px;
+  }
 `;
 
 export const Logo = styled.a`
@@ -153,8 +157,11 @@ export const ContactItem = styled.li`
   gap: 20px;
   align-items: center;
   margin: 0 auto;
-  font-size: 15px;
+  font-size: 10px;
 
+  @media screen and (min-width: 320px) {
+    font-size: 15px;
+  }
   @media screen and (min-width: 468px) {
     font-size: 20px;
   }
@@ -165,7 +172,6 @@ export const ContactItem = styled.li`
 
 export const DeleteBtn = styled.button`
   max-width: 100px;
-  font-size: 15px;
   color: red;
   background-color: #ffffff;
   border: none;
@@ -184,7 +190,6 @@ export const Info = styled.p`
 
 export const Name = styled.p`
   display: block;
-  width: 50%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -192,7 +197,13 @@ export const Name = styled.p`
 
 export const ContactWrapper = styled.div`
   display: flex;
+  gap: 5px;
+  align-items: center;
   justify-content: space-between;
+
+  @media screen and (min-width: 468px) {
+    gap: 10px;
+  }
 `;
 
 export const SpinnerOverlay = styled.div`

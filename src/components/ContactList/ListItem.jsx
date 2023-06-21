@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { BiTrash, BiPhoneCall } from 'react-icons/bi';
+import { BiPhoneCall, BiTrash } from 'react-icons/bi';
 import {
   ContactItem,
   ContactWrapper,
@@ -55,17 +55,15 @@ export const ListItem = ({ contact }) => {
           <BiPhoneCall color="rgba(66, 137, 254, 255)" />
           {number}
         </PhoneWrapper>
-        <div>
-          <DeleteBtn
-            type="button"
-            name="delete"
-            value={id}
-            onClick={handleDelete}
-            disabled={isLoading}
-          >
-            <BiTrash size="20px" />
-          </DeleteBtn>
-        </div>
+        <BiTrash
+          type="button"
+          name="delete"
+          value={id}
+          onClick={handleDelete}
+          disabled={isLoading}
+          cursor={'pointer'}
+          color="red"
+        />
       </ContactWrapper>
     </ContactItem>
   );
